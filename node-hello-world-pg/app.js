@@ -1,32 +1,32 @@
-import { Client } from 'pg';
+var { Client } = require('pg')
 var client = new Client()
-import { getBinding } from 'kube-service-bindings';
+var serviceBindings = require('kube-service-bindings');
 
-import express, { json, urlencoded, static } from 'express';
-import { join } from 'path';
-import cookieParser from 'cookie-parser';
-import logger from 'morgan';
-import indexRouter from './routes/index';
-import greetingRouter from './routes/greeting';
+var express = require('express');
+var path = require('path');
+var cookieParser = require('cookie-parser');
+var logger = require('morgan');
+var indexRouter = require('./routes/index');
+var greetingRouter = require('./routes/greeting');
 var app = express();
 
 try {
     // check if the deployment has been bound to a pg instance through
     // service bindings. If so use that connect info
-    pgConnectionBindings = getBinding('POSTGRESQL', 'pg');
+    pgConnectionBindings = serviceBindings.getBinding('POSTGRESQL', 'pg');
 } catch (err) { // proper error handling here
 };
 
 app.use(logger('dev'));
-app.use(json());
-app.use(urlencoded({ extended: false }));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(static(join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/greeting', greetingRouter);
 
-export default app;
+module.exports = app;
 
 start()
 
