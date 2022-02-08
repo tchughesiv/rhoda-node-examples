@@ -12,9 +12,10 @@ var app = express();
 try {
     // check if the deployment has been bound to a pg instance through
     // service bindings. If so use that connect info
-    pgConnectionBindings = serviceBindings.getBinding('POSTGRESQL', 'pg');
+    ConnectionOptions = serviceBindings.getBinding('POSTGRESQL', 'pg');
 } catch (err) { // proper error handling here
 };
+const client = new Client(ConnectionOptions)
 
 
 app.use(logger('dev'));
@@ -30,7 +31,6 @@ module.exports = app;
 
 start()
 
-var client = new Client()
 async function start() {
     await client.connect()
     var res = await client.query('SELECT $1::text as message', ['Hello world!'])
