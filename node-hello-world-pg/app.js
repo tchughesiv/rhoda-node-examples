@@ -1,6 +1,3 @@
-const { Client } = require('pg')
-var serviceBindings = require('kube-service-bindings');
-
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
@@ -9,6 +6,19 @@ var indexRouter = require('./routes/index');
 var greetingRouter = require('./routes/greeting');
 var app = express();
 
+app.use(logger('dev'));
+app.use(express.json());
+app.use(express.urlencoded({ extended: false }));
+app.use(cookieParser());
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', indexRouter);
+app.use('/greeting', greetingRouter);
+
+module.exports = app;
+
+const { Client } = require('pg')
+var serviceBindings = require('kube-service-bindings');
 var ConnectionOptions = {
     user: 'user',
     host: 'host',
@@ -24,17 +34,6 @@ try {
 } catch (err) { // proper error handling here
 };
 
-app.use(logger('dev'));
-app.use(express.json());
-app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', indexRouter);
-app.use('/greeting', greetingRouter);
-
-module.exports = app;
-
 const client = new Client({
     host: ConnectionOptions.host,
     port: ConnectionOptions.port,
@@ -49,7 +48,7 @@ start()
 
 async function start() {
     await client.connect()
-    var res = await client.query('SELECT $1::text as message', ['Hello world!'])
-    console.log(res.rows[0].message) // Hello world!
+    var res = await client.query('SELECT $1::text as message', ['Connected!'])
+    console.log(res.rows[0].message) // Connected!
     await client.end()
 }
