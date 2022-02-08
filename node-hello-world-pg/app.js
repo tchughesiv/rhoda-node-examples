@@ -8,6 +8,7 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var greetingRouter = require('./routes/greeting');
 var app = express();
+
 var ConnectionOptions = {
     user: 'user',
     host: 'host',
@@ -20,7 +21,6 @@ try {
     // check if the deployment has been bound to a pg instance through
     // service bindings. If so use that connect info
     ConnectionOptions = serviceBindings.getBinding('POSTGRESQL', 'pg');
-    console.log(ConnectionOptions)
 } catch (err) { // proper error handling here
 };
 
@@ -35,7 +35,6 @@ app.use('/greeting', greetingRouter);
 
 module.exports = app;
 
-console.log(ConnectionOptions)
 const client = new Client({
     host: ConnectionOptions.host,
     port: ConnectionOptions.port,
@@ -52,6 +51,5 @@ async function start() {
     await client.connect()
     var res = await client.query('SELECT $1::text as message', ['Hello world!'])
     console.log(res.rows[0].message) // Hello world!
-    console.log(client.host)
     await client.end()
 }
