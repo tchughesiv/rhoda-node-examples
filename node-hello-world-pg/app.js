@@ -1,5 +1,4 @@
 var { Client } = require('pg')
-var client = new Client()
 var serviceBindings = require('kube-service-bindings');
 
 var express = require('express');
@@ -17,6 +16,7 @@ try {
 } catch (err) { // proper error handling here
 };
 
+
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -30,6 +30,7 @@ module.exports = app;
 
 start()
 
+var client = new Client()
 async function start() {
     await client.connect()
     var res = await client.query('SELECT $1::text as message', ['Hello world!'])
