@@ -34,6 +34,7 @@ app.use('/greeting', greetingRouter);
 
 module.exports = app;
 
+console.log(ConnectionOptions)
 const client = new Client({
     host: ConnectionOptions.host,
     port: ConnectionOptions.port,
