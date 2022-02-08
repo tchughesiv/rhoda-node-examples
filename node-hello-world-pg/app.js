@@ -20,6 +20,7 @@ try {
     // check if the deployment has been bound to a pg instance through
     // service bindings. If so use that connect info
     ConnectionOptions = serviceBindings.getBinding('POSTGRESQL', 'pg');
+    console.log(ConnectionOptions)
 } catch (err) { // proper error handling here
 };
 
@@ -39,7 +40,7 @@ const client = new Client({
     host: ConnectionOptions.host,
     port: ConnectionOptions.port,
     database: ConnectionOptions.database,
-    user: ConnectionOptions.username,
+    user: ConnectionOptions.user,
     password: ConnectionOptions.password,
     ssl: {
         rejectUnauthorized: false,
