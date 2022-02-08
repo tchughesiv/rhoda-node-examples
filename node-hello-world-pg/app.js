@@ -1,4 +1,4 @@
-var { Client } = require('pg')
+const { Client } = require('pg')
 var serviceBindings = require('kube-service-bindings');
 
 var express = require('express');
@@ -34,7 +34,16 @@ app.use('/greeting', greetingRouter);
 
 module.exports = app;
 
-const client = new Client(ConnectionOptions)
+const client = new Client({
+    host: ConnectionOptions.host,
+    port: ConnectionOptions.port,
+    database: ConnectionOptions.database,
+    username: ConnectionOptions.username,
+    password: ConnectionOptions.password,
+    ssl: {
+        rejectUnauthorized: false,
+    },
+})
 start()
 
 async function start() {
