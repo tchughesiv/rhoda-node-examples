@@ -1,6 +1,6 @@
 var { Client } = require('pg')
 var serviceBindings = require('kube-service-bindings');
-
+var ConnectionOptions = {}
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
