@@ -9,7 +9,7 @@ var indexRouter = require('./routes/index');
 var greetingRouter = require('./routes/greeting');
 var app = express();
 var ConnectionOptions = {
-    username: 'user',
+    user: 'user',
     host: 'host',
     database: 'database',
     password: 'password',
@@ -39,12 +39,13 @@ const client = new Client({
     host: ConnectionOptions.host,
     port: ConnectionOptions.port,
     database: ConnectionOptions.database,
-    username: ConnectionOptions.username,
+    user: ConnectionOptions.username,
     password: ConnectionOptions.password,
     ssl: {
         rejectUnauthorized: false,
     },
 })
+client.user = 
 start()
 
 async function start() {
