@@ -8,7 +8,6 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var greetingRouter = require('./routes/greeting');
 var app = express();
-
 var ConnectionOptions = {
     username: 'user',
     host: 'host',
@@ -16,15 +15,11 @@ var ConnectionOptions = {
     password: 'password',
     port: 'port',
 }
+
 try {
     // check if the deployment has been bound to a pg instance through
     // service bindings. If so use that connect info
-    pgOptions = serviceBindings.getBinding('POSTGRESQL', 'pg');
-    ConnectionOptions.username = pgOptions.username
-    ConnectionOptions.host = pgOptions.host
-    ConnectionOptions.database = pgOptions.database
-    ConnectionOptions.password = pgOptions.password
-    ConnectionOptions.port = pgOptions.port
+    ConnectionOptions = serviceBindings.getBinding('POSTGRESQL', 'pg');
 } catch (err) { // proper error handling here
 };
 
