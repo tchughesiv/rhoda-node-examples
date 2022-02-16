@@ -1,3 +1,5 @@
+// based on tutorial - https://www.mongodb.com/developer/quickstart/nodejs-change-streams-triggers/
+
 const { MongoClient } = require('mongodb')
 var serviceBindings = require('kube-service-bindings');
 var ConnectionOptions = {
