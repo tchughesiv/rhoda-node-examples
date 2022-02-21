@@ -28,6 +28,12 @@ Now start a container from the image:
 
 You'll be able to access the API at <http://localhost:3000/greeting>.
 
+## Put it in OpenShift
+
+```bash
+oc new-app https://github.com/tchughesiv/rhoda-node-examples --context-dir=node-hello-world-mongodb --name=node-hello-world-mongodb --strategy=docker
+```
+
 ## Acknowledgements
 
 This app was created using the [Express application generator][expressgen].

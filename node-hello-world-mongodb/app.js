@@ -29,7 +29,7 @@ async function main() {
         // Connect to the MongoDB cluster
         await client.connect();
         console.log('Connected successfully to server');
-        setTimeout(function() {}, 10000);
+        setTimeout(function() {}, 3000);
 
         // Make the appropriate DB calls
 
