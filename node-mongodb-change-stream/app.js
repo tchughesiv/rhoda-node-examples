@@ -3,8 +3,8 @@
 const { MongoClient } = require('mongodb')
 var serviceBindings = require('kube-service-bindings');
 
-var database = 'test'
-var dbcollection = 'inventory'
+var DB = process.env.DB || 'test';
+var COLLECTION = process.env.COLLECTION || 'inventory';
 
 let bindings;
 try {
@@ -56,7 +56,7 @@ function closeChangeStream(timeInMs = 60000, changeStream) {
 }
 
 async function monitorListingsUsingEventEmitter(client, timeInMs = 60000, pipeline = []){  
-    const collection = client.db(database).collection(dbcollection);
+    const collection = client.db(DB).collection(COLLECTION);
     const changeStream = collection.watch(pipeline);
 
     changeStream.on('change', (next) => {

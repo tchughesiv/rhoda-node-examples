@@ -1,43 +1,18 @@
-# node-hello-world
-
-This is an example Express server, which serves an API.
-
-Express is the "fast, unopinionated, minimalist web framework for Node.js".
+# node-mongodb-change-stream
 
 To run:
 
     npm install
-    npm start
-
-The app will now start on <http://localhost:3000>
-
-If you hit <http://localhost:3000/greeting> you'll get a greeting:
-
-    $ curl localhost:3000/greeting
-    {"greeting":"Hello, world!"}
+    SERVICE_BINDING_ROOT=~/bindings npm start
 
 ## Put it in a container
 
 Build a Docker image:
 
-    docker build -t node-hello-world .
-
-Now start a container from the image:
-
-    docker run --network=host node-hello-world
-
-You'll be able to access the API at <http://localhost:3000/greeting>.
+    docker build -t node-mongodb-change-stream .
 
 ## Put it in OpenShift
 
 ```bash
 oc new-app https://github.com/tchughesiv/rhoda-node-examples --context-dir=node-mongodb-change-stream --name=node-mongodb-change-stream --strategy=docker
 ```
-
-## Acknowledgements
-
-This app was created using the [Express application generator][expressgen].
-
-[express]: https://expressjs.com/
-[expressgen]: https://expressjs.com/en/starter/generator.html
-
