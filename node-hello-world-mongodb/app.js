@@ -25,18 +25,19 @@ async function main() {
      */
     const client = new MongoClient(url, bindings.connectionOptions);
 
-    try {
-        // Connect to the MongoDB cluster
-        await client.connect();
-        console.log('Connected successfully to server');
-        setTimeout(function() {}, 3000);
+//    try {
 
-        // Make the appropriate DB calls
+    // Connect to the MongoDB cluster
+    await client.connect();
+    console.log('Connected successfully to server');
 
-    } finally {
+    // Make the appropriate DB calls
+
+//    } finally {
         // Close the connection to the MongoDB cluster
-        await client.close();
-    }
+//        await client.close();
+//    }
+
 }
 
 main().catch(console.error);
