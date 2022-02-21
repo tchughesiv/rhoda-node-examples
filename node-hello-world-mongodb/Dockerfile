@@ -1,18 +1,23 @@
-FROM node:14
-
-WORKDIR /usr/src/app
+FROM registry.access.redhat.com/ubi8/nodejs-14 AS BUILD_IMAGE
 
 ENV NODE_ENV production
 
 # Just copy the package.json...
-COPY package*.json ./
+WORKDIR /opt/app-root/src/app
+COPY . .
+
+USER 0
 
 # so we can cache this layer:
 RUN npm install
 
-COPY . .
+FROM registry.access.redhat.com/ubi8/nodejs-14-minimal
 
-EXPOSE 8080
+COPY --from=BUILD_IMAGE /opt/app-root/src/app/node_modules /app/node_modules
+COPY --from=BUILD_IMAGE /opt/app-root/src/app/app.js /app/app.js
+
+WORKDIR /app
+USER 65532
 
 # command to run on container start
 CMD [ "node", "app.js" ]
