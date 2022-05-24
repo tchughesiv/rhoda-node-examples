@@ -9,18 +9,15 @@ var COLLECTION = process.env.COLLECTION || 'weather';
 let bindings;
 try {
     // check if the deployment has been bound to a pg instance through
-    // service bindings. If so use that connect info
+    // service bindings. If so use that connect info and then add
+    // any specific connection options that we want to use
     bindings = serviceBindings.getBinding('MONGODB', 'mongodb');
+    bindings.connectionOptions.w = 'majority';
+    bindings.connectionOptions.retryWrites = true;
 } catch (err) { // proper error handling here
 };
 
 async function main() {
-    /**
-     * Connection URI. Update <username>, <password>, and <your-cluster-url> to reflect your cluster.
-     * See https://docs.mongodb.com/drivers/node/ for more details
-     */
-    const url = bindings.url + '?retryWrites=true&w=majority';
-    
     /**
      * The Mongo Client you will use to interact with your database
      * See https://mongodb.github.io/node-mongodb-native/3.6/api/MongoClient.html for more details
@@ -28,7 +25,7 @@ async function main() {
      * pass option { useUnifiedTopology: true } to the MongoClient constructor.
      * const client =  new MongoClient(uri, {useUnifiedTopology: true})
      */
-    const client = new MongoClient(url, bindings.connectionOptions);
+    const client = new MongoClient(bindings.url, bindings.connectionOptions);
 
     //    try {
     
